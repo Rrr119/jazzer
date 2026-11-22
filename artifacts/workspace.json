@@ -1,0 +1,17 @@
+{
+  "root": "/home/dev/feedback/uid34523",
+  "B": "/home/dev/feedback/uid34523",
+  "sha": "fd3de7a9620614f3e3d579e950856f5094a26eac",
+  "wslDistro": "Ubuntu-26.04",
+  "source": {
+    "owner": "CodeIntelligenceTesting",
+    "repo": "jazzer",
+    "sha": "fd3de7a9620614f3e3d579e950856f5094a26eac"
+  },
+  "fork": {
+    "owner": "Rrr119",
+    "repo": "jazzer",
+    "cloneUrl": "https://github.com/Rrr119/jazzer.git"
+  },
+  "at": "2026-11-22T22:25:22.857Z"
+}

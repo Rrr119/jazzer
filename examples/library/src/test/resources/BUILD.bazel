@@ -1,0 +1,5 @@
+filegroup(
+    name = "expression_seeds",
+    srcs = ["seeds"],
+    visibility = ["//examples/library:__pkg__"],
+)

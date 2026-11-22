@@ -1,0 +1,43 @@
+load("@contrib_rules_jvm//java:defs.bzl", "JUNIT5_DEPS", "java_junit5_test")
+load("//bazel:fuzz_target.bzl", "java_fuzz_target_test")
+
+java_library(
+    name = "expression_evaluator",
+    srcs = ["src/main/java/com/example/library/ExpressionEvaluator.java"],
+    visibility = ["//visibility:public"],
+)
+
+java_junit5_test(
+    name = "ExpressionEvaluatorTest",
+    size = "small",
+    srcs = ["src/test/java/com/example/library/ExpressionEvaluatorTest.java"],
+    test_class = "com.example.library.ExpressionEvaluatorTest",
+    deps = JUNIT5_DEPS + [
+        ":expression_evaluator",
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+    ],
+)
+
+java_fuzz_target_test(
+    name = "ExpressionEvaluatorFuzzer",
+    size = "small",
+    timeout = "short",
+    srcs = ["src/fuzz/java/com/example/library/ExpressionEvaluatorFuzzer.java"],
+    data = ["//examples/library/src/test/resources:expression_seeds"],
+    env = {
+        "COVERAGE_DUMP_FILE": "coverage.exec",
+        "COVERAGE_REPORT_FILE": "coverage.txt",
+    },
+    fuzzer_args = [
+        "-runs=2000",
+        "-seed=34523",
+        "$(rlocationpath //examples/library/src/test/resources:expression_seeds)",
+        "--coverage_dump=coverage.exec",
+        "--coverage_report=coverage.txt",
+        "--instrumentation_includes=com.example.library.**",
+    ],
+    target_class = "com.example.library.ExpressionEvaluatorFuzzer",
+    verify_crash_input = False,
+    verify_crash_reproducer = False,
+    deps = [":expression_evaluator"],
+)
